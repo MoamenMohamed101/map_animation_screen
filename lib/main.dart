@@ -1,3 +1,4 @@
+import 'package:animator/animator.dart';
 import 'package:flutter/material.dart';
 
 main() {
@@ -62,6 +63,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          makePoint(140, 40),
+          makePoint(190, 190),
+          makePoint(219, 60),
         ],
       ),
     );
@@ -78,21 +82,86 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   height: 60,
                   width: 60,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: AssetImage('assets/images/place.jpg'),
+                      fit: BoxFit.cover,
+                      image: AssetImage(image),
                     ),
                   ),
                 ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.grey[200],
+                  ),
+                  child: Text(
+                    '2.1 mi',
+                    style: TextStyle(color: Colors.grey[500]),
+                  ),
+                )
               ],
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              'Golde Gate Bridge',
+              style: TextStyle(
+                  color: Colors.grey[800],
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child:
+                  Icon(Icons.star_border, color: Colors.yellow[700], size: 30),
+            )
           ],
+        ),
+      ),
+    );
+  }
+
+  makePoint(double top, double left) {
+    return Positioned(
+      top: top,
+      left: left,
+      child: Container(
+        height: 20,
+        width: 20,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.blue.withOpacity(.3),
+        ),
+        child: Animator<double>(
+          builder: (context, animatorState, child) => Center(
+            child: Container(
+              margin: EdgeInsets.all(animatorState.value),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          duration: const Duration(seconds: 1),
+          tween: Tween<double>(begin: 4, end: 6),
+          cycles: 0,
         ),
       ),
     );
